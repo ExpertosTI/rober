@@ -8,11 +8,26 @@ services:
       - PORT=8787
     networks:
       - RenaceNet
+    # Container labels → Traefik providers.docker (ve las tasks de Swarm)
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=RenaceNet"
+      - "traefik.http.routers.rober-secure.rule=Host(`rober.renace.tech`)"
+      - "traefik.http.routers.rober-secure.entrypoints=websecure"
+      - "traefik.http.routers.rober-secure.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.rober-secure.service=rober-educard"
+      - "traefik.http.services.rober-educard.loadbalancer.server.port=8787"
+      - "traefik.http.routers.rober-http.rule=Host(`rober.renace.tech`)"
+      - "traefik.http.routers.rober-http.entrypoints=web"
+      - "traefik.http.routers.rober-http.middlewares=https-redirect"
+      - "traefik.http.routers.rober-http.service=rober-educard"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
     deploy:
       mode: replicated
       replicas: 1
       restart_policy:
         condition: on-failure
+      # Service labels → Traefik providers.swarm
       labels:
         - "traefik.enable=true"
         - "traefik.swarm.network=RenaceNet"
@@ -23,9 +38,9 @@ services:
         - "traefik.http.services.rober-educard.loadbalancer.server.port=8787"
         - "traefik.http.routers.rober-http.rule=Host(`rober.renace.tech`)"
         - "traefik.http.routers.rober-http.entrypoints=web"
-        - "traefik.http.routers.rober-http.middlewares=rober-https-redirect"
+        - "traefik.http.routers.rober-http.middlewares=https-redirect"
         - "traefik.http.routers.rober-http.service=rober-educard"
-        - "traefik.http.middlewares.rober-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
 
 networks:
   RenaceNet:
