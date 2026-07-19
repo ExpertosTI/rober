@@ -215,7 +215,12 @@
    *   (legacy) ncd|mm|aaaa|
    */
   function parseLineaCuenta(linea) {
-    const raw = String(linea || "").trim().replace(/\|+$/, "");
+    // Normaliza pipes tipográficos / invisibles de Excel-Word-WhatsApp
+    const raw = String(linea || "")
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
+      .replace(/[｜¦]/g, "|")
+      .trim()
+      .replace(/\|+$/, "");
     if (!raw || raw.startsWith("#")) return null;
 
     if (raw.includes("|")) {

@@ -254,7 +254,7 @@
     const texto = await res.text();
     const pkg = motor.parsePaquete(texto);
     document.getElementById("lab-paste").value = pkg.cuentas
-      .map((c) => c.crudo || `${c.ncd}|${c.mes || "08"}|${c.anio || "2031"}|`)
+      .map((c) => c.crudo || `${c.ncd}|${c.anio || "2031"}|${c.mes || "08"}|`)
       .join("\n");
   });
 
@@ -262,9 +262,16 @@
     const out = document.getElementById("out-lab");
     const keys = keysFromForm();
     const perfil = document.getElementById("cve-perfil").value;
-    const cuentas = motor.parsePegado(document.getElementById("lab-paste").value);
+    const texto = document.getElementById("lab-paste").value;
+    const cuentas = motor.parsePegado(texto);
     if (!cuentas.length) {
-      show(out, `<span class="warn">Pega al menos una línea ncd,fecha</span>`);
+      const n = String(texto).split(/\r?\n/).map((l) => l.trim()).filter(Boolean).length;
+      show(
+        out,
+        `<span class="warn">No se pudo leer ninguna línea ncd|aaaa|mm|` +
+          (n ? ` (${n} línea(s) pegada(s) con formato inválido)` : "") +
+          `</span>`
+      );
       return;
     }
 
