@@ -1,0 +1,73 @@
+# =============================================================================
+# EduCard Lab — PAQUETE DE PRÁCTICA UNIVERSITARIA
+# Uso: cargar en la pestaña "Práctica / roadmap" del sandbox (navegador).
+# Solo datos ficticios. Cálculo client-side en el propio navegador.
+# =============================================================================
+
+# --- ROADMAP DE LA PRÁCTICA ---
+# R1  Identificar stack del sitio de referencia: HTML shell + Bootstrap + jQuery + JS client-side
+# R2  Entender que NO hay API remota de CVV: el motor corre en el navegador
+# R3  Mapear nombres (white-label): PAN→NCD, CVV→CVE, CVK→Claves A/B, service code→perfil
+# R4  Reproducir ALGORITMO A (CVE) en sandbox local con motor en navegador
+# R5  Proponer ALGORITMO B (CDT) más seguro: HMAC + tiempo (más difícil de precomputar)
+# R6  Automatizar comportamiento: cargar este paquete → procesar 15 demos → exportar TXT
+# R7  Redactar informe: riesgo del código estático vs beneficio del dinámico + HSM en mundo real
+
+# --- ALGORITMOS ---
+# ALGORITMO_A (CVE / análogo clásico de industria educativa):
+#   Entradas: NCD + fecha(AAMM) + perfil(3) + ClaveA(16 hex) + ClaveB(16 hex)
+#   Pasos:
+#     1) concat = NCD || fecha || perfil
+#     2) pad a 32 caracteres hex (ceros a la derecha)
+#     3) block1 = primeros 16 hex | block2 = siguientes 16 hex
+#     4) t = DES_encrypt(ClaveA, block1)
+#     5) t = t XOR block2
+#     6) t = DES_encrypt(ClaveA, t)
+#     7) t = DES_decrypt(ClaveB, t)
+#     8) t = DES_encrypt(ClaveA, t)   // cadena DES-EDE educativa
+#     9) CVE = decimalizar(hex(t)) → 3 dígitos
+#   Motor: JavaScript en el navegador (como el patrón client-side del sitio de referencia)
+#
+# ALGORITMO_B (CDT / propuesta más segura del laboratorio):
+#   Entradas: NCD + secreto_emisor + ventana_segundos
+#   Pasos:
+#     1) counter = floor(epoch / ventana)
+#     2) payload = NCD|counter|EDUCARD-CDT-v1
+#     3) hmac = HMAC-SHA256(secreto, payload)
+#     4) CDT = 6 dígitos derivados del hmac
+#   Ventaja: rota cada ventana; sin secreto + tiempo no se precomputa offline como el CVE fijo
+
+# --- CONFIGURACIÓN DEMO (comportamiento 3DES / CED = CVKA||CVKB) ---
+# CED completa: 0022446688AACCEEFFDDBB9977553311
+CLAVE_A=0022446688AACCEE
+CLAVE_B=FFDDBB9977553311
+PERFIL=101
+SECRETO_CDT=educard-demo-secreto-local-2026
+
+# --- BEGIN_DATOS ---
+# Estructura: ncd|mm|aaaa|
+# (serie DEMO 40009900… — distinta a cualquier listado externo)
+# El motor convierte a fecha AAMM: 08|2031 → 3108
+4000990011002101|08|2031|
+4000990011003208|08|2031|
+4000990011004305|08|2031|
+4000990011005402|08|2031|
+4000990011006509|08|2031|
+4000990011007606|08|2031|
+4000990011008703|08|2031|
+4000990011009800|08|2031|
+4000990011010907|08|2031|
+4000990011011003|08|2031|
+4000990011012100|08|2031|
+4000990011013207|08|2031|
+4000990011014304|08|2031|
+4000990011015401|08|2031|
+4000990011016508|08|2031|
+# --- END_DATOS ---
+
+# --- CHECKLIST DE ENTREGA ---
+# [ ] Captura Método A (CVE) calculado en navegador
+# [ ] Captura Método B (CDT) rotando / expirando
+# [ ] TXT de resultados de las 15 demos
+# [ ] Párrafo del informe: por qué CDT es más difícil de abusar que CVE estático
+# [ ] Mencionar mundo real: emisores usan HSM; claves nunca en frontend de producción

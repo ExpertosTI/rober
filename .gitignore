@@ -1,0 +1,7 @@
+node_modules/
+.DS_Store
+exports/*.txt
+!exports/paquete_practica.txt
+!exports/demo_cuentas_pipe.txt
+*.log
+.env

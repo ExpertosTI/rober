@@ -1,0 +1,24 @@
+services:
+  educard:
+    build: .
+    image: educard-sandbox-lab:latest
+    container_name: educard-rober
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=8787
+    networks:
+      - renacenet
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=renacenet
+      - traefik.http.routers.rober.rule=Host(`rober.renace.tech`)
+      - traefik.http.routers.rober.entrypoints=websecure
+      - traefik.http.routers.rober.tls=true
+      - traefik.http.routers.rober.tls.certresolver=letsencrypt
+      - traefik.http.services.rober.loadbalancer.server.port=8787
+
+networks:
+  renacenet:
+    external: true

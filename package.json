@@ -1,0 +1,15 @@
+{
+  "name": "educard-sandbox-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Laboratorio educativo local: verificación estática vs dinámica (sandbox, datos ficticios)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "export-demo": "node scripts/export_demo.js",
+    "automatizar": "node scripts/automatizar_comportamiento.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

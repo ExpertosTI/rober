@@ -1,0 +1,180 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta name="robots" content="nofollow">
+  <meta charset="utf-8">
+  <meta name="description" content="Payment Card Tools - tools for engineers working in the Payment Card Industry">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="Ib05ZtAKfVT8Xl5-GUhke8-5ilxYdFSmMI1PjcLOFXU" />
+  
+  <title>Payment Card Tools</title>
+
+<script>
+  var link = !!document.querySelector("link[rel='canonical']") ? document.querySelector("link[rel='canonical']") : document.createElement('link');
+  link.setAttribute('rel', 'canonical');
+  link.setAttribute('href', location.protocol + '//' + location.host + (location.pathname === '/' ? '' : location.pathname) );
+  document.head.appendChild(link);
+</script>
+
+  
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/styles.css" rel="stylesheet">
+  
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light" style="height: 40px;">
+  <div class="container-fluid">
+    <div style="display:flex">
+    <a href="javascript:void(0)" onclick="triggerMenu()" class="menu2btn px-1 d-flex align-items-center link-dark text-decoration-none">
+      <span class="fs-5 text-muted fw-semibold">☰</span>
+    </a>
+	<a id="homeButton" href="javascript:void(0)" onclick="gotoHome()" class="ps-2 d-flex align-items-center link-dark text-decoration-none">
+      <span class="fs-5 fw-semibold">Payment Card Tools</span>
+    </a>
+	</div> 
+  </div>
+</nav>
+
+<main>
+
+	<div id="menu-fade" style="z-index:50;" onclick="$(this).removeAttr('class'); $('#main').removeClass('menu2active');"></div>
+
+  <div id="main" class="menu2 flex-shrink-0 ps-3 pt-2 bg-white" style="z-index:100; width: 16rem; overflow: auto; overflow-x: hidden; white-space: nowrap;">
+    <ul id="menu" class="list-unstyled ps-0">
+    </ul>
+  </div>
+
+<div class="content2 container-fluid overflow-auto" style="margin-left: inherit; padding-top:10px; font-size:0.9rem">
+ <div class="row">
+  <div id="content" class="col-lg-8">
+    <div id="pnf" style="display: none;" data-nosnippet> 
+    </div>
+	<div id="home" style="display: none;"></div>
+    <div id="des-calculator" style="display: none;"></div>
+	<div id="aes-calculator" style="display: none;"></div>
+	<div id="bitwise-calculator" style="display: none;"></div>
+	<div id="base64-calculator" style="display: none;"></div>
+	<div id="sha1" style="display: none;"></div>
+	<div id="sha256" style="display: none;"></div>
+	<div id="hmac" style="display: none;"></div>
+	<div id="cvv-calculator" style="display: none;"></div>
+	<div id="cavv-decoder" style="display: none;"></div>
+	<div id="aav-decoder" style="display: none;"></div>
+	<div id="cavv-calculator" style="display: none;"></div>
+	<div id="spa-aav-cvc2" style="display: none;"></div>
+	<div id="dcvv-calculator" style="display: none;"></div>
+	<div id="iso9564-format-0" style="display: none;"></div>
+	<div id="iso9564-format-1" style="display: none;"></div>
+	<div id="visa-pvv" style="display: none;"></div>
+	<div id="ibm-3624" style="display: none;"></div>
+	<div id="ibm-3624-offset" style="display: none;"></div>
+	<div id="pin-from-pinblock" style="display: none;"></div>
+	<div id="pin-for-pvv" style="display: none;"></div>
+	<div id="luhn-algorithm" style="display: none;"></div>
+	<div id="iso-8583-bitmap" style="display: none;"></div>
+	<div id="key-block" style="display: none;"></div>
+	<div id="emv-tlv-parser" style="display: none;"></div>
+	<div id="tvr" style="display: none;"></div>
+	<div id="aip" style="display: none;"></div>
+	<div id="termcap"style="display: none;"></div>
+	<div id="cvm-results" style="display: none;"></div>
+	<div id="cvm-list" style="display: none;"></div>
+	<div id="form-factor" style="display: none;"></div>
+	<div id="iad" style="display: none;"></div>
+	<div id="ctq" style="display: none;"></div>
+	<div id="ttq" style="display: none;"></div>
+	<div id="tsi" style="display: none;"></div>
+	<div id="auc" style="display: none;"></div>
+	<div id="addltermcap" style="display: none;"></div>
+	<div id="dols" style="display: none;"></div>
+	<div id="cvr" style="display: none;"></div>
+	<div id="csu" style="display: none;"></div>
+	<div id="mac-calculator" style="display: none;"></div>
+	<div id="udk-calculator" style="display: none;"></div>
+    <div id="cvn10" style="display: none;"></div>
+	<div id="cvn18" style="display: none;"></div>
+	<div id="mchip" style="display: none;"></div>
+	<div id="ip0040t1" style="display: none;"></div>
+	<div id="ip0072t1" style="display: none;"></div>
+	<div id="ascii-to-hex" style="display: none;"></div>
+	<div id="hex-to-ascii" style="display: none;"></div>
+	<div id="juliandate" style="display: none;"></div>
+	<div id="mpe2sql" style="display:none;"></div>
+	<div id="ipm2json" style="display:none;"></div>
+	<div id="json2ipm" style="display:none;"></div>
+	<div id="ipmmask" style="display:none;"></div>
+	<div id="ipmconv" style="display:none;"></div>
+	<div id="mcipm22" style="display:none;"></div>
+	<div id="mccis61" style="display:none;"></div>
+	<div id="test-card-generator" style="display:none;"></div>
+	<div id="emvtags" style="display:none;"></div>
+	<div id="countries" style="display:none;"></div>
+	<div id="currencies" style="display:none;"></div>
+	<div id="mccs" style="display:none;"></div>
+  </div>
+  <div id="ads" align="center" class="col-lg-4">
+  
+  
+  <script>
+    var m = document.getElementsByTagName('main')[0];
+    const observer = new MutationObserver(function (mutations, observer) {
+        m.style.height = "";
+    });
+    observer.observe(m, {
+        attributes: true,
+        attributeFilter: ['style']
+    });
+  </script>  
+    
+
+<style type="text/css">
+.adslot_1 { display:block; }
+@media (max-width: 560px) { .adslot_1 { display: none; } }
+@media (min-width: 560px) { .adslot_1 { display: block; } }
+</style>
+
+
+  </div>
+ </div>
+
+</div>
+
+<script>
+if (window.navigator.userAgent.indexOf("Trident/") > 0) {
+    alert("Sorry, but Internet Explorer is not supported, please use one of the modern browser");
+}
+</script>
+
+<script src="/jquery/jquery-3.7.0.min.js"></script>
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/main.js"></script>
+
+
+</main>
+
+<footer class="footer mt-auto bg-light" style="position: fixed; bottom: 0; width: 100%; height: 20px;">
+  <div class="container-fluid" style="display: flex;">
+
+    <span class="text-muted" style="font-weight: 500;font-size: 0.8rem;/* margin-left: auto; */">© 2025, paymentcardtools.com</span>
+
+	<a tabindex="0" id="policypop" class="btn btn-link" role="button" data-bs-html="true" data-bs-placement="top" data-bs-toggle="popover" data-bs-trigger="focus" title="Privacy statement" data-bs-content="<h6>General</h6><p>This website is committed to protecting your privacy. We do not collect, store, or distribute any of your personal data. All tools and functionalities provided on this website are implemented on the client side, ensuring that any information you enter in the forms is processed solely within your browser and is not transmitted to our servers or any third-party servers. This approach ensures that no data is shared or exposed beyond your personal device. Your privacy and data security are our top priorities</p><h6>Contact</h6><p>If you have any questions, please feel free to get in touch using the Feedback button below</p>" style="padding: 0px; border: 0px; font-weight: 500;font-size: 0.8rem; margin-left: auto; cursor: pointer;">Privacy</a>
+    
+    <a style="font-weight: 500;font-size: 0.8rem; margin-left: 15px;" href="mailto:info@paymentcardtools.com">Feedback</a> 
+  </div>
+  
+</footer>
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EduCard Lab — Sandbox educativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="top">
+    <div class="brand">
+      <span class="brand-mark">EL</span>
+      <div>
+        <h1>EduCard Lab</h1>
+        <p>Sandbox local · ingeniería inversa educativa</p>
+      </div>
+    </div>
+    <span class="badge">127.0.0.1 · sin red externa</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p>
+        Motor en el <strong>mismo navegador</strong> (client-side): Algoritmo A =
+        <strong>DES-EDE + decimalización</strong> (CVE). Algoritmo B =
+        <strong>HMAC-SHA256 + tiempo</strong> (CDT). Solo datos ficticios.
+      </p>
+    </section>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="cve" role="tab" aria-selected="true">
+        Método A · CVE estático
+      </button>
+      <button class="tab" data-tab="cdt" role="tab" aria-selected="false">
+        Método B · CDT dinámico
+      </button>
+      <button class="tab" data-tab="practica" role="tab" aria-selected="false">
+        Práctica / roadmap
+      </button>
+      <button class="tab" data-tab="lab" role="tab" aria-selected="false">
+        Laboratorio cyber
+      </button>
+      <button class="tab" data-tab="mapa" role="tab" aria-selected="false">
+        Glosario / mapa
+      </button>
+    </nav>
+
+    <section id="panel-cve" class="panel active" role="tabpanel">
+      <div class="panel-head">
+        <h2>Código de Verificación Estático (CVE)</h2>
+        <p>Comportamiento 3DES: CED = CVKA‖CVKB (32 hex). Motor en el navegador.</p>
+      </div>
+      <form id="form-cve" class="form">
+        <label>
+          Número de Cuenta Demo (NCD)
+          <input id="cve-ncd" name="ncd" inputmode="numeric" maxlength="19" value="4000990011002101" required />
+        </label>
+        <label>
+          Fecha demo (AAMM)
+          <input id="cve-fecha" name="fechaDemo" inputmode="numeric" maxlength="4" value="3108" required />
+        </label>
+        <label>
+          Código de perfil
+          <input id="cve-perfil" name="codigoPerfil" inputmode="numeric" maxlength="3" value="101" required />
+        </label>
+        <label>
+          Clave emisor A / CVKA (16 hex)
+          <input id="cve-ka" name="claveA" maxlength="16" value="0022446688AACCEE" required />
+        </label>
+        <label>
+          Clave emisor B / CVKB (16 hex)
+          <input id="cve-kb" name="claveB" maxlength="16" value="FFDDBB9977553311" required />
+        </label>
+        <label>
+          CED completa (CVKA‖CVKB, 32 hex) — opcional, reparte A/B
+          <input id="cve-ced" name="ced" maxlength="32" value="0022446688AACCEEFFDDBB9977553311" />
+        </label>
+        <button type="submit" class="btn primary">Calcular CVE</button>
+      </form>
+      <aside id="out-cve" class="output" hidden></aside>
+    </section>
+
+    <section id="panel-cdt" class="panel" role="tabpanel" hidden>
+      <div class="panel-head">
+        <h2>Código Dinámico Temporizado (CDT)</h2>
+        <p>Alternativa más segura: HMAC + ventana de 30s → 6 dígitos que rotan. Más difícil de precomputar.</p>
+      </div>
+      <form id="form-cdt" class="form">
+        <label>
+          Número de Cuenta Demo (NCD)
+          <input id="cdt-ncd" name="ncd" inputmode="numeric" maxlength="19" value="4000990011002101" required />
+        </label>
+        <label>
+          Secreto emisor demo
+          <input id="cdt-secreto" name="secretoEmisor" value="educard-demo-secreto-local-2026" required />
+        </label>
+        <label>
+          Ventana (segundos)
+          <input id="cdt-ventana" name="ventanaSegundos" type="number" min="10" max="120" value="30" required />
+        </label>
+        <button type="submit" class="btn primary">Calcular CDT</button>
+      </form>
+      <aside id="out-cdt" class="output" hidden></aside>
+    </section>
+
+    <section id="panel-practica" class="panel" role="tabpanel" hidden>
+      <div class="panel-head">
+        <h2>Práctica · cargar paquete TXT</h2>
+        <p>Simula el comportamiento en lote con el motor del navegador y muestra el roadmap.</p>
+      </div>
+      <div class="practica-actions">
+        <label class="file-btn">
+          Cargar paquete .txt
+          <input type="file" id="pkg-file" accept=".txt,text/plain" hidden />
+        </label>
+        <button type="button" id="pkg-load-default" class="btn secondary">Cargar paquete demo</button>
+        <button type="button" id="pkg-run" class="btn primary" disabled>Procesar con motor</button>
+        <button type="button" id="pkg-download" class="btn secondary" disabled>Descargar resultados</button>
+      </div>
+      <pre id="pkg-roadmap" class="output roadmap">Carga el paquete para ver el roadmap (R1–R7) y los datos demo.</pre>
+      <aside id="out-practica" class="output" hidden></aside>
+    </section>
+
+    <section id="panel-lab" class="panel" role="tabpanel" hidden>
+      <div class="panel-head">
+        <h2>Laboratorio de ciberseguridad</h2>
+        <p>
+          Pega números demo, mide velocidad, fuerza del algoritmo y resistencia teórica a adivinanza.
+          Todo corre local en el navegador (sandbox educativo).
+        </p>
+      </div>
+      <label class="paste-label">
+        Pegar números (estructura: <code>ncd|mm|aaaa|</code>)
+        <textarea id="lab-paste" rows="8" placeholder="4000990011002101|08|2031|&#10;4000990011003208|08|2031|&#10;4000990011004305|08|2031|"></textarea>
+      </label>
+      <div class="practica-actions">
+        <button type="button" id="lab-fill-demo" class="btn secondary">Pegar demo 15</button>
+        <button type="button" id="lab-run-batch" class="btn primary">Procesar lote + generar TXT</button>
+        <button type="button" id="lab-bench" class="btn secondary">Benchmark velocidad</button>
+        <button type="button" id="lab-guess" class="btn secondary">Simular adivinanza CVE</button>
+        <button type="button" id="lab-report" class="btn secondary">Informe fuerza CVE vs CDT</button>
+        <button type="button" id="lab-download" class="btn secondary" disabled>Descargar informe</button>
+      </div>
+      <div id="lab-metrics" class="metrics" hidden></div>
+      <aside id="out-lab" class="output" hidden></aside>
+    </section>
+
+    <section id="panel-mapa" class="panel" role="tabpanel" hidden>
+      <div class="panel-head">
+        <h2>Mapa de nombres (origen → sandbox)</h2>
+        <p>Correspondencia didáctica para el informe universitario. No implica compatibilidad con redes de pago.</p>
+      </div>
+      <table class="map">
+        <thead>
+          <tr><th>Concepto típico</th><th>Nombre en EduCard Lab</th><th>Rol</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PAN / número de tarjeta</td><td>NCD</td><td>Identificador de cuenta demo</td></tr>
+          <tr><td>Fecha de expiración</td><td>Fecha demo (AAMM)</td><td>Entrada temporal fija</td></tr>
+          <tr><td>Service code</td><td>Código de perfil</td><td>Reglas de uso demo</td></tr>
+          <tr><td>CVK A / B</td><td>Clave emisor A / B</td><td>Secreto simétrico del emisor</td></tr>
+          <tr><td>CVV / CVC</td><td>CVE</td><td>Código estático de 3 dígitos</td></tr>
+          <tr><td>(propuesta segura)</td><td>CDT</td><td>OTP por tiempo (HMAC-SHA256)</td></tr>
+        </tbody>
+      </table>
+      <div class="stack-note">
+        <h3>Stack del sandbox (EduCard Lab)</h3>
+        <ul>
+          <li>Frontend: HTML + CSS + JS (vanilla)</li>
+          <li>Backend local: Node.js <code>http</code> en 127.0.0.1:8787</li>
+          <li>Cálculo principal: <code>motor.js</code> en el navegador (mismo patrón client-side)</li>
+          <li>Algoritmo A: DES-EDE + decimalización · Algoritmo B: HMAC-SHA256 (Web Crypto)</li>
+          <li>Paquete práctica: <code>paquete_practica.txt</code> · automatizar: <code>npm run automatizar</code></li>
+        </ul>
+      </div>
+      <div class="stack-note">
+        <h3>Hallazgo de arquitectura (sitio de referencia público)</h3>
+        <ul>
+          <li>Shell HTML + menú lateral; cada herramienta es un <code>div</code> (p. ej. <code>#cvv-calculator</code>) cargado por JS</li>
+          <li>Stack visible: Bootstrap, jQuery 3.7.0, <code>/js/common.js</code>, <code>/js/main.js</code></li>
+          <li>Su propia política: cálculo <strong>client-side en el navegador</strong>; no envían los datos del formulario a un servidor de cálculo</li>
+          <li>Implicación: automatizar ese sitio = controlar un navegador, no “hablar con un API de CVV”</li>
+          <li>Mundo real (emisores): claves en HSM, PCI DSS, sin calculadoras públicas ni claves en el cliente</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Uso exclusivamente académico · datos 100% ficticios · no procesa transacciones reales</p>
+  </footer>
+
+  <script src="/motor.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
