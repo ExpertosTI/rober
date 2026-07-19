@@ -31,16 +31,21 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-/** ncd|mm|aaaa| → AAMM ; también soporta ncd,aamm */
+/** ncd|aaaa|mm| → AAMM ; legacy ncd|mm|aaaa| ; también ncd,aamm */
 function parseLinea(linea) {
   const raw = linea.trim().replace(/\|+$/, "");
   if (!raw || raw.startsWith("#")) return null;
   if (raw.includes("|")) {
     const p = raw.split("|").map((x) => x.trim()).filter(Boolean);
     if (p.length >= 3) {
+      if (/^\d{4}$/.test(p[1]) && /^\d{1,2}$/.test(p[2])) {
+        const anio = p[1];
+        const mm = p[2].padStart(2, "0");
+        return { ncd: p[0], fechaDemo: anio.slice(-2) + mm, mes: mm, anio };
+      }
       const mm = p[1].padStart(2, "0");
-      const yy = p[2].slice(-2);
-      return { ncd: p[0], fechaDemo: yy + mm, mes: mm, anio: p[2] };
+      const anio = p[2];
+      return { ncd: p[0], fechaDemo: anio.slice(-2) + mm, mes: mm, anio };
     }
   }
   if (raw.includes(",")) {

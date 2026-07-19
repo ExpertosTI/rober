@@ -274,7 +274,7 @@
     lineas.push(`# Generado: ${new Date().toISOString()}`);
     lineas.push(`# CED/CVK: ${keys.cedCompleta}`);
     lineas.push(`# Algoritmo: ${motor.ALGORITMO_CVE}`);
-      lineas.push("# ncd|mm|aaaa|aamm|perfil|cve");
+      lineas.push("# ncd|aaaa|mm|aamm|perfil|cve");
 
     let html = "";
     for (let i = 0; i < cuentas.length; i++) {
@@ -288,8 +288,8 @@
       });
       const mm = c.mes || r.fechaDemo.slice(2, 4);
       const anio = c.anio || "20" + r.fechaDemo.slice(0, 2);
-      lineas.push(`${r.ncd}|${mm}|${anio}|${r.fechaDemo}|${r.codigoPerfil}|${r.cve}`);
-      html += `[${i + 1}/${cuentas.length}] ${r.ncd}|${mm}|${anio}| → CVE ${r.cve}\n`;
+      lineas.push(`${r.ncd}|${anio}|${mm}|${r.fechaDemo}|${r.codigoPerfil}|${r.cve}`);
+      html += `[${i + 1}/${cuentas.length}] ${r.ncd}|${anio}|${mm}| → CVE ${r.cve}\n`;
     }
     const ms = performance.now() - t0;
     lineas.push(`# ms_total=${ms.toFixed(2)} ops=${cuentas.length}`);

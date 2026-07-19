@@ -209,9 +209,10 @@
 
   /**
    * Estructura de datos de práctica:
-   *   ncd|mm|aaaa|     → fecha interna AAMM (YYMM)
+   *   ncd|aaaa|mm|     → fecha interna AAMM (YYMM)  [año primero, mes segundo]
    *   ncd,aamm
-   *   ncd,mm,aaaa
+   *   ncd,aaaa,mm
+   *   (legacy) ncd|mm|aaaa|
    */
   function parseLineaCuenta(linea) {
     const raw = String(linea || "").trim().replace(/\|+$/, "");
@@ -219,30 +220,60 @@
 
     if (raw.includes("|")) {
       const p = raw.split("|").map((x) => x.trim()).filter(Boolean);
-      if (p.length >= 3 && /^\d{12,19}$/.test(p[0]) && /^\d{1,2}$/.test(p[1]) && /^\d{4}$/.test(p[2])) {
-        const mm = p[1].padStart(2, "0");
-        const yy = p[2].slice(-2);
+      // ncd|aaaa|mm|
+      if (p.length >= 3 && /^\d{12,19}$/.test(p[0]) && /^\d{4}$/.test(p[1]) && /^\d{1,2}$/.test(p[2])) {
+        const anio = p[1];
+        const mm = p[2].padStart(2, "0");
+        const yy = anio.slice(-2);
         return {
           ncd: p[0],
           mes: mm,
-          anio: p[2],
+          anio,
           fechaDemo: yy + mm,
-          crudo: `${p[0]}|${mm}|${p[2]}|`,
+          crudo: `${p[0]}|${anio}|${mm}|`,
+        };
+      }
+      // legacy ncd|mm|aaaa|
+      if (p.length >= 3 && /^\d{12,19}$/.test(p[0]) && /^\d{1,2}$/.test(p[1]) && /^\d{4}$/.test(p[2])) {
+        const mm = p[1].padStart(2, "0");
+        const anio = p[2];
+        const yy = anio.slice(-2);
+        return {
+          ncd: p[0],
+          mes: mm,
+          anio,
+          fechaDemo: yy + mm,
+          crudo: `${p[0]}|${anio}|${mm}|`,
         };
       }
       return null;
     }
 
     const parts = raw.split(/[,\s;]+/).filter(Boolean);
-    if (parts.length >= 3 && /^\d{12,19}$/.test(parts[0]) && /^\d{1,2}$/.test(parts[1]) && /^\d{4}$/.test(parts[2])) {
-      const mm = parts[1].padStart(2, "0");
-      const yy = parts[2].slice(-2);
+    // ncd,aaaa,mm
+    if (parts.length >= 3 && /^\d{12,19}$/.test(parts[0]) && /^\d{4}$/.test(parts[1]) && /^\d{1,2}$/.test(parts[2])) {
+      const anio = parts[1];
+      const mm = parts[2].padStart(2, "0");
+      const yy = anio.slice(-2);
       return {
         ncd: parts[0],
         mes: mm,
-        anio: parts[2],
+        anio,
         fechaDemo: yy + mm,
-        crudo: `${parts[0]}|${mm}|${parts[2]}|`,
+        crudo: `${parts[0]}|${anio}|${mm}|`,
+      };
+    }
+    // legacy ncd,mm,aaaa
+    if (parts.length >= 3 && /^\d{12,19}$/.test(parts[0]) && /^\d{1,2}$/.test(parts[1]) && /^\d{4}$/.test(parts[2])) {
+      const mm = parts[1].padStart(2, "0");
+      const anio = parts[2];
+      const yy = anio.slice(-2);
+      return {
+        ncd: parts[0],
+        mes: mm,
+        anio,
+        fechaDemo: yy + mm,
+        crudo: `${parts[0]}|${anio}|${mm}|`,
       };
     }
     if (parts.length >= 2 && /^\d{12,19}$/.test(parts[0]) && /^\d{4}$/.test(parts[1])) {
@@ -252,7 +283,7 @@
         mes: aamm.slice(2, 4),
         anio: "20" + aamm.slice(0, 2),
         fechaDemo: aamm,
-        crudo: `${parts[0]}|${aamm.slice(2, 4)}|20${aamm.slice(0, 2)}|`,
+        crudo: `${parts[0]}|20${aamm.slice(0, 2)}|${aamm.slice(2, 4)}|`,
       };
     }
     if (parts.length >= 1 && /^\d{12,19}$/.test(parts[0])) {
@@ -261,7 +292,7 @@
         mes: "08",
         anio: "2031",
         fechaDemo: "3108",
-        crudo: `${parts[0]}|08|2031|`,
+        crudo: `${parts[0]}|2031|08|`,
       };
     }
     return null;
