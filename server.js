@@ -64,7 +64,7 @@ function serveStatic(req, res) {
 
 const server = http.createServer(async (req, res) => {
   try {
-    if (req.method === "GET" && req.url === "/api/health") {
+    if ((req.method === "GET" || req.method === "HEAD") && req.url === "/api/health") {
       return sendJson(res, 200, {
         ok: true,
         sandbox: true,
