@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   educard:
     image: educard-sandbox-lab:latest
@@ -16,19 +14,15 @@ services:
       restart_policy:
         condition: on-failure
       labels:
-        - traefik.enable=true
-        - traefik.docker.network=RenaceNet
-        # HTTP → HTTPS
-        - traefik.http.routers.rober-http.rule=Host(`rober.renace.tech`)
-        - traefik.http.routers.rober-http.entrypoints=web
-        - traefik.http.routers.rober-http.middlewares=rober-https-redirect
-        - traefik.http.middlewares.rober-https-redirect.redirectscheme.scheme=https
-        # HTTPS
-        - traefik.http.routers.rober.rule=Host(`rober.renace.tech`)
-        - traefik.http.routers.rober.entrypoints=websecure
-        - traefik.http.routers.rober.tls=true
-        - traefik.http.routers.rober.tls.certresolver=letsencryptresolver
-        - traefik.http.services.rober.loadbalancer.server.port=8787
+        - "traefik.enable=true"
+        - "traefik.http.routers.rober-secure.rule=Host(`rober.renace.tech`)"
+        - "traefik.http.routers.rober-secure.entrypoints=websecure"
+        - "traefik.http.routers.rober-secure.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.rober-educard.loadbalancer.server.port=8787"
+        - "traefik.http.routers.rober-http.rule=Host(`rober.renace.tech`)"
+        - "traefik.http.routers.rober-http.entrypoints=web"
+        - "traefik.http.routers.rober-http.middlewares=rober-https-redirect"
+        - "traefik.http.middlewares.rober-https-redirect.redirectscheme.scheme=https"
 
 networks:
   RenaceNet:
