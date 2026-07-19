@@ -8,20 +8,14 @@ services:
       - PORT=8787
     networks:
       - RenaceNet
-    # Publicado para healthcheck local (Traefik sigue siendo el front)
-    ports:
-      - target: 8787
-        published: 8787
-        protocol: tcp
-        mode: ingress
     deploy:
       mode: replicated
       replicas: 1
       restart_policy:
         condition: on-failure
-      # Patrón idéntico a forms.renace.tech (ecofast) — solo deploy.labels
       labels:
         - "traefik.enable=true"
+        - "traefik.swarm.network=RenaceNet"
         - "traefik.http.routers.rober-secure.rule=Host(`rober.renace.tech`)"
         - "traefik.http.routers.rober-secure.entrypoints=websecure"
         - "traefik.http.routers.rober-secure.tls.certresolver=letsencryptresolver"
