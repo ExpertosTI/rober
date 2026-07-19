@@ -23,7 +23,7 @@ const BASE = "http://127.0.0.1:8787";
 
 const CLAVE_A = "0022446688AACCEE";
 const CLAVE_B = "FFDDBB9977553311";
-const CODIGO_PERFIL = "101";
+const CODIGO_PERFIL = "000";
 const SECRETO_CDT = "educard-demo-secreto-local-2026";
 const PAUSA_MS = 200;
 

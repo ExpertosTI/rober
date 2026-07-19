@@ -16,7 +16,7 @@ const OUTPUT = path.join(ROOT, "exports", "resultados_demo.txt");
 // Claves demos fijas del laboratorio (NO son claves de un emisor real)
 const CLAVE_A = "0022446688AACCEE";
 const CLAVE_B = "FFDDBB9977553311";
-const CODIGO_PERFIL = "101";
+const CODIGO_PERFIL = "000";
 const SECRETO_CDT = "educard-demo-secreto-local-2026";
 
 function parseLinea(linea) {

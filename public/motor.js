@@ -203,7 +203,7 @@
     claveA: "0022446688AACCEE",
     claveB: "FFDDBB9977553311",
     cedCompleta: "0022446688AACCEEFFDDBB9977553311",
-    codigoPerfil: "101",
+    codigoPerfil: "000",
     secretoCdt: "educard-demo-secreto-local-2026",
   };
 
