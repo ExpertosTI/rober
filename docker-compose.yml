@@ -15,13 +15,16 @@ services:
         condition: on-failure
       labels:
         - "traefik.enable=true"
+        - "traefik.swarm.network=RenaceNet"
         - "traefik.http.routers.rober-secure.rule=Host(`rober.renace.tech`)"
         - "traefik.http.routers.rober-secure.entrypoints=websecure"
         - "traefik.http.routers.rober-secure.tls.certresolver=letsencryptresolver"
+        - "traefik.http.routers.rober-secure.service=rober-educard"
         - "traefik.http.services.rober-educard.loadbalancer.server.port=8787"
         - "traefik.http.routers.rober-http.rule=Host(`rober.renace.tech`)"
         - "traefik.http.routers.rober-http.entrypoints=web"
         - "traefik.http.routers.rober-http.middlewares=rober-https-redirect"
+        - "traefik.http.routers.rober-http.service=rober-educard"
         - "traefik.http.middlewares.rober-https-redirect.redirectscheme.scheme=https"
 
 networks:
